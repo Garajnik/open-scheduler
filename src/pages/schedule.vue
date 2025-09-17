@@ -1,5 +1,5 @@
 <template>
-  <MainPage />
+  <SchedulePage />
 </template>
 
 <script lang="ts" setup>
