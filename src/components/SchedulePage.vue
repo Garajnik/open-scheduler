@@ -100,11 +100,11 @@
     dialog.value = true
   }
 
-  function closeDialog (a: number, b: Ref<string>, c: Ref<string>) {
-    console.log(a, b.value, c.value)
-    days.value[a].startTime = b.value
-    days.value[a].endTime = c.value
-    days.value[a].dayOff = c.value && b.value ? false : true
+  function closeDialog (a: number, b: string, c: string) {
+    console.log(a, b, c)
+    days.value[a].startTime = b
+    days.value[a].endTime = c
+    days.value[a].dayOff = c && b ? false : true
     dialog.value = false
   }
 

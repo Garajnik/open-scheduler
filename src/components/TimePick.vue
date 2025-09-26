@@ -3,8 +3,9 @@
   import { createCssTransition } from 'vuetify/util/transitions'
 
   const { dayIndex } = defineProps({ dayIndex: Number })
-  const emit = defineEmits(['close-window'])
-
+  const emit = defineEmits<{
+    (e: 'close-window', dayIndex: number, startTime: string, endTime: string): void
+  }>()
   const startTime = ref('')
   const endTime = ref('')
 
@@ -22,20 +23,32 @@
   }
 
   function selectTime () {
+    if (dayIndex === undefined) {
+      return null
+    }
     emit('close-window', dayIndex, startTime.value, endTime.value)
   }
 
   function selectDayOff () {
-    emit('close-window', dayIndex, 0, 0)
+    if (dayIndex === undefined) {
+      return null
+    }
+    emit('close-window', dayIndex, '0', '0')
   }
 
   function selectMorning () {
+    if (dayIndex === undefined) {
+      return null
+    }
     startTime.value = '7:30'
     endTime.value = '15:00'
     emit('close-window', dayIndex, startTime.value, endTime.value)
   }
 
   function selectEvening () {
+    if (dayIndex === undefined) {
+      return null
+    }
     startTime.value = '14:45'
     endTime.value = '21:15'
     emit('close-window', dayIndex, startTime.value, endTime.value)
