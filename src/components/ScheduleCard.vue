@@ -1,19 +1,19 @@
 <template>
-  <v-card @click="$emit('openDialog', index)" :title="title" variant="tonal" link>
-    <div class="container" v-if="dayOff === false">
-      <v-chip>{{startTime}}</v-chip>
+  <v-card link :title="title" variant="tonal" @click="$emit('open-dialog', index)">
+    <div v-if="dayOff === false" class="container">
+      <v-chip>{{ startTime }}</v-chip>
       <p>-</p>
-      <v-chip>{{endTime}}</v-chip>
+      <v-chip>{{ endTime }}</v-chip>
     </div>
-    <div class="container" v-else="dayOff === true">
+    <div v-else class="container">
       <v-chip color="red">Выходной</v-chip>
     </div>
   </v-card>
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['index', 'title', 'startTime', 'endTime', 'dayOff', 'openFn'])
-const emits = defineEmits(['openDialog'])
+  defineProps(['index', 'title', 'startTime', 'endTime', 'dayOff', 'openFn'])
+  defineEmits(['open-dialog'])
 </script>
 
 <style lang="scss" scoped>

@@ -2,12 +2,17 @@
   <div id="container">
     <v-container gap="10">
       <h2 id="text">Добро пожаловать, {{ userName }}</h2>
-      <v-select label="Выберите точку" default="Scandis" :items="['Scandis', 'Smart', 'БЦ']" variant="outlined"
-        density="compact"></v-select>
+      <v-select
+        default="Scandis"
+        density="compact"
+        :items="['Scandis', 'Smart', 'БЦ']"
+        label="Выберите точку"
+        variant="outlined"
+      />
       <div id="buttonsContainer">
-        <v-btn @click="openSchedule" base-color='blue'>Создать расписание</v-btn>
-        <v-btn @click="openSchedule" base-color='blue'>Изменить расписание</v-btn>
-        <v-btn @click="viewSchedule" base-color='blue'>Просмотреть расписание</v-btn>
+        <v-btn base-color="blue" @click="openSchedule">Создать расписание</v-btn>
+        <v-btn base-color="blue" @click="openSchedule">Изменить расписание</v-btn>
+        <v-btn base-color="blue" @click="viewSchedule">Просмотреть расписание</v-btn>
       </div>
     </v-container>
   </div>
@@ -17,12 +22,12 @@
   import { ref } from 'vue'
   const userName = ref('user')
 
-  function openSchedule() {
-    window.location.href = '/schedule';
+  function openSchedule () {
+    window.location.href = '/schedule'
   }
 
-  function viewSchedule() {
-    window.open("http://google.com")
+  function viewSchedule () {
+    window.open('http://google.com')
   }
 </script>
 

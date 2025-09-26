@@ -1,66 +1,78 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { createCssTransition } from "vuetify/util/transitions";
+  import { ref } from 'vue'
+  import { createCssTransition } from 'vuetify/util/transitions'
 
-const { dayIndex } = defineProps({ dayIndex: Number });
-const emit = defineEmits(["closeWindow"]);
+  const { dayIndex } = defineProps({ dayIndex: Number })
+  const emit = defineEmits(['close-window'])
 
-const startTime = ref(null)
-const endTime = ref(null)
+  const startTime = ref('')
+  const endTime = ref('')
 
-const ComponentTransition = createCssTransition("component-transition");
-const showStartTimeClock = ref(false);
-const showEndTimeClock = ref(false);
+  const ComponentTransition = createCssTransition('component-transition')
+  const showStartTimeClock = ref(false)
+  const showEndTimeClock = ref(false)
 
-function openClock() {
-  showStartTimeClock.value = !showStartTimeClock.value;
-}
+  function openClock () {
+    showStartTimeClock.value = !showStartTimeClock.value
+  }
 
-function switchClock() {
-  showStartTimeClock.value = !showStartTimeClock.value;
-  showEndTimeClock.value = !showEndTimeClock.value;
-}
+  function switchClock () {
+    showStartTimeClock.value = !showStartTimeClock.value
+    showEndTimeClock.value = !showEndTimeClock.value
+  }
 
-function selectTime() {
-  emit("closeWindow", dayIndex, startTime, endTime);
-}
+  function selectTime () {
+    emit('close-window', dayIndex, startTime.value, endTime.value)
+  }
 
-function selectDayOff(){
-  emit("closeWindow", dayIndex, 0, 0);
-}
+  function selectDayOff () {
+    emit('close-window', dayIndex, 0, 0)
+  }
 
-function selectMorning(){
-  startTime.value = "7:30";
-  endTime.value = "15:00";
-  emit("closeWindow", dayIndex, startTime, endTime);
-}
+  function selectMorning () {
+    startTime.value = '7:30'
+    endTime.value = '15:00'
+    emit('close-window', dayIndex, startTime.value, endTime.value)
+  }
 
-function selectEvening(){
-  startTime.value = "14:45";
-  endTime.value = "21:15";
-  emit("closeWindow", dayIndex, startTime, endTime);
-}
+  function selectEvening () {
+    startTime.value = '14:45'
+    endTime.value = '21:15'
+    emit('close-window', dayIndex, startTime.value, endTime.value)
+  }
 </script>
 
 <template>
   <div id="container">
-    <v-btn @click="selectMorning" base-color="green">Утро</v-btn>
-    <v-btn @click="selectEvening" base-color="orange">Вечер</v-btn>
+    <v-btn base-color="green" @click="selectMorning">Утро</v-btn>
+    <v-btn base-color="orange" @click="selectEvening">Вечер</v-btn>
     <v-btn base-color="grey" @click="openClock">Своё время</v-btn>
     <ComponentTransition>
       <v-card v-show="showStartTimeClock">
-        <v-time-picker min="7:30" max="20:15" v-model="startTime" title="Начало смены:" format="24hr"></v-time-picker>
+        <v-time-picker
+          v-model="startTime"
+          format="24hr"
+          max="20:15"
+          min="7:30"
+          title="Начало смены:"
+        />
         <v-btn @click="switchClock">Далее</v-btn>
       </v-card>
     </ComponentTransition>
     <ComponentTransition>
       <v-card v-show="showEndTimeClock">
-        <v-time-picker min="9:30" max="21:15" v-model="endTime" title="Конец смены:" format="24hr"></v-time-picker>
+        <v-time-picker
+          v-model="endTime"
+          format="24hr"
+          max="21:15"
+          min="9:30"
+          title="Конец смены:"
+        />
         <v-btn @click="switchClock">Назад</v-btn>
         <v-btn @click="selectTime">Готово</v-btn>
       </v-card>
     </ComponentTransition>
-    <v-btn @click="selectDayOff" base-color="red">Убрать время</v-btn>
+    <v-btn base-color="red" @click="selectDayOff">Убрать время</v-btn>
   </div>
 </template>
 
