@@ -7,6 +7,7 @@ import VueRouter from 'unplugin-vue-router/vite'
 
 // Utilities
 import { defineConfig } from 'vite'
+import mkcert from 'vite-plugin-mkcert'
 import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 // https://vitejs.dev/config/
@@ -39,6 +40,7 @@ export default defineConfig({
         ],
       },
     }),
+    mkcert(),
   ],
   optimizeDeps: {
     exclude: [

@@ -4,6 +4,7 @@
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
 
+import { applyPolyfills, on, postEvent } from '@tma.js/bridge'
 // Composables
 import { createApp } from 'vue'
 
@@ -17,6 +18,18 @@ import App from './App.vue'
 import 'unfonts.css'
 
 const app = createApp(App)
+
+// Apply polyfills for Object.hasOwn. Bridge validators use it.
+applyPolyfills()
+
+// Show the back button, wait for it to be clicked once,
+// then hide it.
+postEvent('web_app_setup_back_button', { is_visible: true })
+
+const off = on('back_button_pressed', () => {
+  postEvent('web_app_setup_back_button', { is_visible: false })
+  off()
+})
 
 registerPlugins(app)
 

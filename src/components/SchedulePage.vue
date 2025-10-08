@@ -104,6 +104,7 @@
     console.log(a, b, c)
     days.value[a].startTime = b
     days.value[a].endTime = c
+    // TODO: fix fay off check
     days.value[a].dayOff = c && b ? false : true
     dialog.value = false
   }

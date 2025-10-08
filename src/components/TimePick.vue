@@ -1,6 +1,45 @@
+<template>
+  <div id="container">
+    <v-btn v-show="showButtons" base-color="green" @click="selectMorning">Утро</v-btn>
+    <v-btn v-show="showButtons" base-color="orange" @click="selectEvening">Вечер</v-btn>
+    <v-btn v-show="showButtons" base-color="grey" @click="openClock">Своё время</v-btn>
+
+    <v-card v-show="showStartTimeClock" class="timeCard">
+      <v-time-picker
+        v-model="startTime"
+        color="cyan-lighten-1"
+        format="24hr"
+        max="20:15"
+        min="7:30"
+        title="Начало смены:"
+      />
+      <div class="buttonsCard">
+        <v-btn class="NextButton" @click="closeClock">Назад</v-btn>
+        <v-btn class="NextButton" color="green" @click="switchClock">Далее</v-btn>
+      </div>
+    </v-card>
+
+    <v-card v-show="showEndTimeClock" class="timeCard">
+      <v-time-picker
+        v-model="endTime"
+        color="purple-darken-2"
+        format="24hr"
+        max="21:15"
+        min="9:30"
+        title="Конец смены:"
+      />
+      <div class="buttonsCard">
+        <v-btn @click="switchClock">Назад</v-btn>
+        <v-btn color="green" @click="selectTime">Готово</v-btn>
+      </div>
+    </v-card>
+
+    <v-btn base-color="red" @click="selectDayOff">Убрать время</v-btn>
+  </div>
+</template>
+
 <script lang="ts" setup>
   import { ref } from 'vue'
-  import { createCssTransition } from 'vuetify/util/transitions'
 
   const { dayIndex } = defineProps({ dayIndex: Number })
   const emit = defineEmits<{
@@ -9,12 +48,19 @@
   const startTime = ref('')
   const endTime = ref('')
 
-  const ComponentTransition = createCssTransition('component-transition')
   const showStartTimeClock = ref(false)
   const showEndTimeClock = ref(false)
+  const showButtons = ref(true)
 
   function openClock () {
     showStartTimeClock.value = !showStartTimeClock.value
+    showButtons.value = !showButtons.value
+  }
+
+  function closeClock () {
+    showStartTimeClock.value = false
+    showEndTimeClock.value = false
+    showButtons.value = true
   }
 
   function switchClock () {
@@ -33,7 +79,7 @@
     if (dayIndex === undefined) {
       return null
     }
-    emit('close-window', dayIndex, '0', '0')
+    emit('close-window', dayIndex, '', '')
   }
 
   function selectMorning () {
@@ -55,40 +101,6 @@
   }
 </script>
 
-<template>
-  <div id="container">
-    <v-btn base-color="green" @click="selectMorning">Утро</v-btn>
-    <v-btn base-color="orange" @click="selectEvening">Вечер</v-btn>
-    <v-btn base-color="grey" @click="openClock">Своё время</v-btn>
-    <ComponentTransition>
-      <v-card v-show="showStartTimeClock">
-        <v-time-picker
-          v-model="startTime"
-          format="24hr"
-          max="20:15"
-          min="7:30"
-          title="Начало смены:"
-        />
-        <v-btn @click="switchClock">Далее</v-btn>
-      </v-card>
-    </ComponentTransition>
-    <ComponentTransition>
-      <v-card v-show="showEndTimeClock">
-        <v-time-picker
-          v-model="endTime"
-          format="24hr"
-          max="21:15"
-          min="9:30"
-          title="Конец смены:"
-        />
-        <v-btn @click="switchClock">Назад</v-btn>
-        <v-btn @click="selectTime">Готово</v-btn>
-      </v-card>
-    </ComponentTransition>
-    <v-btn base-color="red" @click="selectDayOff">Убрать время</v-btn>
-  </div>
-</template>
-
 <style lang="scss" scoped>
 #container {
   display: flex;
@@ -108,5 +120,16 @@
     transform: scale(0.2);
     filter: hue-rotate(90deg);
   }
+}
+
+.timeCard {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.buttonsCard {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

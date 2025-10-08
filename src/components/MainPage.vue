@@ -29,25 +29,26 @@
   function viewSchedule () {
     window.open('http://google.com')
   }
+
 </script>
 
 <style scoped>
-  #text {
-    margin-bottom: 10px;
-  }
+#text {
+  margin-bottom: 10px;
+}
 
-  #container {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+#container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-  #buttonsContainer {
-    display: flex;
+#buttonsContainer {
+  display: flex;
 
-    gap: 15px;
-    flex-direction: column;
-    justify-content: center;
-  }
+  gap: 15px;
+  flex-direction: column;
+  justify-content: center;
+}
 </style>
